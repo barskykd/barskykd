@@ -1,0 +1,59 @@
+body {
+    font-family: sans-serif;
+}
+
+.sensor-graph-view {
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    margin: 8px;
+    width: 700px;
+    height: 400px;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.sensor-graph-view_header {
+    font-weight: bold;
+    margin: 4px;
+}
+
+.sensor-map-view {
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    margin: 8px;
+    width: 700px;
+    height: 400px;
+    display: inline-flex;
+    flex-direction: column;
+    vertical-align: top;
+}
+
+.sensor-map-view_header {
+    font-weight: bold;
+    margin: 4px;
+}
+
+.sensor-map-view_map {
+    width: auto;
+    height: auto;
+    flex: 1;
+}
+
+.sensor-list-view {
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    margin: 8px;
+    width: 700px;    
+    display: inline-block;
+    vertical-align: top;
+}
+
+.sensor-list-view_table {
+    width: 100%;
+    padding: 4px;
+}
+
+.sensor-list-view_table > thead {
+    font-weight: bold;
+}
+
+.sensor-list-view_table > tbody > tr > td {
+    border: inherit;
+}
