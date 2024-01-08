@@ -96,9 +96,19 @@ function validStreetType(t) {
 }
 
 function getBucket(node1, node2) {
-    let {lat:x1, lon:y1} = node1;
-    let {lat:x2, lon:y2} = node2;    
-    const tan = (x2-x1)/(y2-y1);
+    let {lon:lon1, lat:lat1} = node1;
+    let {lon:lon2, lat:lat2} = node2;  
+    let dx = getLength({lon: lon1, lat: lat1}, {lon: lon2, lat:lat1})
+    let dy = getLength({lon: lon1, lat: lat1}, {lon: lon1, lat:lat2})
+    if (lon2 < lon1) {
+        dx = -dx;
+    }
+
+    if (lat2 < lat1) {
+        dy = -dy;
+    }
+
+    const tan = dy/dx
     if (isNaN(tan)) {        
         return 0;
     }
@@ -114,12 +124,21 @@ function getBucket(node1, node2) {
 }
 
 function getLength(node1, node2) {
-    let {lon:x1, lat:y1} = node1;
-    let {lon:x2, lat:y2} = node2;    
-    const dx = x2-x1;
-    const dy = y2-y1;
-    const result = Math.sqrt(dx*dx+dy*dy);    
-    return result;
+    let {lon:lon1, lat:lat1} = node1;
+    let {lon:lon2, lat:lat2} = node2;    
+    const R = 6371e3; // metres
+    const φ1 = lat1 * Math.PI/180; // φ, λ in radians
+    const φ2 = lat2 * Math.PI/180;
+    const Δφ = (lat2-lat1) * Math.PI/180;
+    const Δλ = (lon2-lon1) * Math.PI/180;
+
+    const a = Math.sin(Δφ/2) * Math.sin(Δφ/2) +
+            Math.cos(φ1) * Math.cos(φ2) *
+            Math.sin(Δλ/2) * Math.sin(Δλ/2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+
+    const d = R * c; // in metres
+    return d;
 }
 
 function maxBucket() {    
